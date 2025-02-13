@@ -95,4 +95,29 @@ class ProductRepositoryTest {
         Product result = productRepository.update(updatedProduct);
         assertNull(result, "Updating a non-existent product should return null");
     }
+
+    @Test
+    void testDeleteProductPositive() {
+        Product product = new Product();
+        product.setProductId("uuid-2");
+        product.setProductName("Product To Delete");
+        product.setProductQuantity(150);
+        productRepository.create(product);
+
+        Product deleted = productRepository.delete("uuid-2");
+        assertNotNull(deleted, "Deleted product should be returned");
+        assertEquals("uuid-2", deleted.getProductId(), "Deleted product's ID should match");
+
+        Iterator<Product> iterator = productRepository.findAll();
+        while (iterator.hasNext()) {
+            Product p = iterator.next();
+            assertNotEquals("uuid-2", p.getProductId(), "Deleted product should no longer be in the repository");
+        }
+    }
+
+    @Test
+    void testDeleteProductNegativeNonExistent() {
+        Product deleted = productRepository.delete("non-existent-id");
+        assertNull(deleted, "Deleting a non-existent product should return null");
+    }
 }
