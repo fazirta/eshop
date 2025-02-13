@@ -63,4 +63,36 @@ class ProductRepositoryTest {
         assertEquals(product2.getProductId(), savedProduct.getProductId());
         assertFalse(productIterator.hasNext());
     }
+
+    @Test
+    void testEditProductPositive() {
+        Product product = new Product();
+        product.setProductId("uuid-1");
+        product.setProductName("Old Name");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId("uuid-1");
+        updatedProduct.setProductName("New Name");
+        updatedProduct.setProductQuantity(200);
+
+        Product result = productRepository.update(updatedProduct);
+
+        assertNotNull(result, "Updated product should not be null");
+        assertEquals("uuid-1", result.getProductId(), "Product ID should remain unchanged");
+        assertEquals("New Name", result.getProductName(), "Product name should be updated");
+        assertEquals(200, result.getProductQuantity(), "Product quantity should be updated");
+    }
+
+    @Test
+    void testEditProductNegativeNonExistent() {
+        Product updatedProduct = new Product();
+        updatedProduct.setProductId("non-existent-uuid");
+        updatedProduct.setProductName("Should Not Update");
+        updatedProduct.setProductQuantity(-50);
+
+        Product result = productRepository.update(updatedProduct);
+        assertNull(result, "Updating a non-existent product should return null");
+    }
 }
