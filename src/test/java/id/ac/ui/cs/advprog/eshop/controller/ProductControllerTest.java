@@ -65,7 +65,7 @@ class ProductControllerTest {
                         .param("productName", "Test Product")
                         .param("productQuantity", "10"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("list"));
+                .andExpect(redirectedUrl("/product/list"));
 
         verify(productService, times(1)).create(ArgumentMatchers.any(Product.class));
     }
