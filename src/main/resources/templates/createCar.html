@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Create New Product</title>
+    <title>Create New car</title>
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
       rel="stylesheet"
@@ -12,26 +12,36 @@
   </head>
   <body>
     <div class="container">
-      <h3>Create New Product</h3>
-      <form th:action="@{/product/create}" th:object="${product}" method="post">
+      <h3>Create New car</h3>
+      <form th:action="@{/car/create}" th:object="${car}" method="post">
         <div class="form-group">
           <label for="nameInput">Name</label>
           <input
-            th:field="*{productName}"
+            th:field="*{carName}"
             type="text"
             class="form-control mb-4 col-4"
             id="nameInput"
-            placeholder="Enter product' name"
+            placeholder="Enter car' name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="colorInput">Color</label>
+          <input
+            th:field="*{carColor}"
+            type="text"
+            class="form-control mb-4 col-4"
+            id="colorInput"
+            placeholder="Enter car' color"
           />
         </div>
         <div class="form-group">
           <label for="quantityInput">Quantity</label>
           <input
-            th:field="*{productQuantity}"
+            th:field="*{carQuantity}"
             type="text"
             class="form-control mb-4 col-4"
             id="quantityInput"
-            placeholder="Enter product' name"
+            placeholder="Enter car' name"
           />
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
