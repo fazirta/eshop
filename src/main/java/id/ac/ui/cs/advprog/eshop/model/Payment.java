@@ -1,10 +1,10 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
 import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.Arrays;
 import java.util.Map;
 
 @Builder
@@ -17,7 +17,7 @@ public class Payment {
 
     public Payment(String id, String method, Map<String, String> paymentData) {
         this.id = id;
-        this.status = "WAITING";
+        this.status = PaymentStatus.WAITING.getValue();
 
         if (!PaymentMethod.contains(method)) {
             throw new IllegalArgumentException("Invalid method: " + method);
@@ -34,12 +34,7 @@ public class Payment {
 
     public Payment(String id, String method, Map<String, String> paymentData, String status) {
         this(id, method, paymentData);
-
-        String[] statusList = {"WAITING", "SUCCESS", "REJECTED"};
-        if (Arrays.stream(statusList).noneMatch(item -> item.equals(status))) {
-            throw new IllegalArgumentException("Invalid status: " + status);
-        }
-        this.status = status;
+        setStatus(status);
     }
 
     private void validateVoucher(Map<String, String> paymentData) {
@@ -70,10 +65,10 @@ public class Payment {
     }
 
     public void setStatus(String status) {
-        String[] statusList = {"WAITING", "SUCCESS", "REJECTED"};
-        if (Arrays.stream(statusList).noneMatch(item -> item.equals(status))) {
-            throw new IllegalArgumentException("Invalid status: " + status);
+        if (PaymentStatus.contains(status)) {
+            this.status = status;
+        } else {
+            throw new IllegalArgumentException();
         }
-        this.status = status;
     }
 }
