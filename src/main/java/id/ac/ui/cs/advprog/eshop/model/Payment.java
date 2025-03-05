@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -18,8 +19,7 @@ public class Payment {
         this.id = id;
         this.status = "WAITING";
 
-        String[] methodList = {"VOUCHER", "CASH_ON_DELIVERY"};
-        if (Arrays.stream(methodList).noneMatch(item -> item.equals(method))) {
+        if (!PaymentMethod.contains(method)) {
             throw new IllegalArgumentException("Invalid method: " + method);
         }
         this.method = method;
